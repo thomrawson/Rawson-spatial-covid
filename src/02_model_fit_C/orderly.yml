@@ -1,0 +1,54 @@
+
+script: script.R
+
+artefacts:
+  - data:
+      description: stanfit object containing model output
+      filenames:
+        - Outputs/stanfit.RData
+        - Outputs/model_data.RData
+        - parameters_used.txt
+        - Outputs/stan_model_code.RData
+        - Outputs/loo_mm_stanfit.RData
+        - lareto_k_table_mm.png
+        - loo_mm_PSIS.png
+        - loo_mm_estimates.png
+
+
+parameters:
+  #warmup_iterations:
+  #  default: 1000
+  total_iterations:
+    default: 2000
+  n_chains:
+    default: 4
+  tree_depth:
+    default: 15
+  scale_by_susceptible_pool:
+    default: TRUE
+  cases_type:
+    default: "Linelist"
+  use_SGTF_data:
+    default: TRUE
+  final_week:
+    default: 96 #(104, 96, 71 are the main ones to use)
+  random_walk_prior_scale:
+    default: 1
+  rw_penalty:
+    default: 0
+
+#
+packages:
+  - tidyverse
+  - rstan
+
+
+depends:
+  - 01_Prepare_Data:
+      id: latest
+      use:
+        Cases_Data.RData: Outputs/Cases_Data.RData
+        W.RData: Outputs/W.RData
+        
+
+

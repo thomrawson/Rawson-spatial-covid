@@ -1,0 +1,6 @@
+*.png
+*.txt
+Outputs/
+Hospital_Outputs/
+Case_Outputs/
+Outputs/*.png

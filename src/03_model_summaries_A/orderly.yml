@@ -1,0 +1,67 @@
+# You must have a script that does something with the data.  This
+# will be a single string and the filename must exist when orderly is
+# run
+script: script.R
+
+artefacts:
+  - data:
+      description: Model traceplot figures
+      filenames:
+        - parameters_used.txt
+        - Outputs/main_summaries.csv
+        - Outputs/theta_summaries.csv
+        - Outputs/betas_1_10.png
+        - Outputs/betas_11_13.png
+        - Outputs/betas_14_16.png
+        - Outputs/mean_accept_stat_by_chain.txt
+        - Outputs/stan_rhat.png
+        - Outputs/Goodness_of_fit/log_week_to_week_difference.png
+        - Outputs/Goodness_of_fit/week_to_week_difference.png
+        - Outputs/random_walk_values.png
+        - Outputs/random_walk_steps_values.png
+        - Outputs/Goodness_of_fit/Boxplot_error.png
+        - Outputs/phi_posterior.png
+        
+        
+# parameters:
+parameters:
+  tree_depth:
+    default: 15
+  total_iterations:
+    default: 2000
+  n_chains:
+    default: 4
+  scale_by_susceptible_pool:
+    default: TRUE
+  cases_type:
+    default: "Linelist"
+  use_SGTF_data:
+    default: TRUE
+  final_week:
+    default: 96 #(104, 96, 71 are the main ones to use)
+  random_walk_prior_scale:
+    default: 1
+  rw_penalty:
+    default: 0
+
+packages:
+  - tidyverse
+  - rstan
+  - sf
+  - spdep
+  - gridExtra
+  - cowplot
+  - plyr
+
+
+
+depends:
+  - 02_model_fit_A:
+      id: latest(parameter:total_iterations == total_iterations && parameter:tree_depth == tree_depth && parameter:n_chains == n_chains && parameter:scale_by_susceptible_pool == scale_by_susceptible_pool && parameter:cases_type == cases_type && parameter:use_SGTF_data == use_SGTF_data && parameter:cases_type == cases_type && parameter:final_week == final_week && parameter:random_walk_prior_scale == random_walk_prior_scale && rw_penalty == rw_penalty )
+      use:
+        stanfit.RData: Outputs/stanfit.RData
+        model_data.RData: Outputs/model_data.RData
+  - 01_Prepare_Data:
+      id: latest
+      use:
+        Boundaries_Data.RData: Outputs/Boundaries_Data.RData
