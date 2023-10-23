@@ -7,7 +7,7 @@ This is an [`orderly`](https://github.com/vimc/orderly) project, holding the ana
 
 ## Running
 
-A sequence of tasks needs to be run with a set of parameters to generate the final results.  This is sketched out in the [`Master_script.R`](run.R) script, though this is provided only as a form of documentation. In practice these were run over several days on a HPC.
+A sequence of tasks needs to be run with a set of parameters to generate the final results.  This is sketched out in the `Master_script.R` script, though this is provided only as a form of documentation. In practice these were run over several days on a HPC.
 
 
 1. Run the `01_Prepare_Data` task to prepare the raw data for fitting.
