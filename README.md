@@ -27,6 +27,8 @@ drat:::add("vimc")
 install.packages("orderly")
 ```
 
+You will also need to follow the specific install instructions for [rstan](https://mc-stan.org/users/interfaces/rstan).
+
 ## License
 
 MIT © Imperial College of Science, Technology and Medicine
