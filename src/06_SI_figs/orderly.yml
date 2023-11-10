@@ -1,0 +1,139 @@
+
+script: script.R
+
+
+artefacts:
+  - data:
+      description: Parameters used
+      filenames:
+        - parameters_used.txt
+
+        
+
+
+parameters:
+  tree_depth:
+    default: 15
+  total_iterations:
+    default: 2000
+  n_chains:
+    default: 4
+  scale_by_susceptible_pool:
+    default: TRUE
+  cases_type:
+    default: "Linelist"
+  use_SGTF_data:
+    default: TRUE
+  final_week:
+    default: 96 #(104, 96, 71 are the main ones to use)
+  random_walk_prior_scale:
+    default: 1
+  print_extra_gof:
+    default: FALSE
+  rw_penalty:
+    default: 0
+
+packages:
+  - tidyverse
+  - rstan
+  - sf
+  - spdep
+  - gridExtra
+  - cowplot
+  - plyr
+  - scales
+  #- ggtext
+  - stringr
+
+
+depends:
+  - FINAL_02_model_fit_A:
+      id: latest(parameter:total_iterations == total_iterations && parameter:tree_depth == tree_depth && parameter:n_chains == n_chains && parameter:scale_by_susceptible_pool == scale_by_susceptible_pool && parameter:cases_type == cases_type && parameter:use_SGTF_data == use_SGTF_data && parameter:cases_type == cases_type && parameter:final_week == final_week && parameter:random_walk_prior_scale == random_walk_prior_scale && rw_penalty == rw_penalty )
+      use:
+        model_data.RData: Outputs/model_data.RData
+  - FINAL_01_Prepare_Data:
+      id: latest
+      use:
+        Boundaries_Data.RData: Outputs/Boundaries_Data.RData
+        W.RData: Outputs/W.RData
+  - FINAL_03_model_summaries_A:
+      id: latest(parameter:total_iterations == total_iterations && parameter:tree_depth == tree_depth && parameter:n_chains == n_chains && parameter:scale_by_susceptible_pool == scale_by_susceptible_pool && parameter:cases_type == cases_type && parameter:use_SGTF_data == use_SGTF_data && parameter:cases_type == cases_type && parameter:final_week == final_week && parameter:random_walk_prior_scale == random_walk_prior_scale && rw_penalty == rw_penalty )
+      use:
+        main_summaries_ALL.csv: Outputs/main_summaries.csv
+  - FINAL_03_model_summaries_univariate:
+      id: latest(parameter:covariate == "prop_asian" && parameter:total_iterations == total_iterations && parameter:tree_depth == tree_depth && parameter:n_chains == n_chains && parameter:scale_by_susceptible_pool == scale_by_susceptible_pool && parameter:cases_type == cases_type && parameter:use_SGTF_data == use_SGTF_data && parameter:cases_type == cases_type && parameter:final_week == final_week && parameter:random_walk_prior_scale == random_walk_prior_scale && rw_penalty == rw_penalty )
+      use:
+        main_summaries_01_prop_asian.csv: Outputs/main_summaries.csv
+  - FINAL_03_model_summaries_univariate:
+      id: latest(parameter:covariate == "prop_black_afr_car" && parameter:total_iterations == total_iterations && parameter:tree_depth == tree_depth && parameter:n_chains == n_chains && parameter:scale_by_susceptible_pool == scale_by_susceptible_pool && parameter:cases_type == cases_type && parameter:use_SGTF_data == use_SGTF_data && parameter:cases_type == cases_type && parameter:final_week == final_week && parameter:random_walk_prior_scale == random_walk_prior_scale && rw_penalty == rw_penalty )
+      use:
+        main_summaries_02_prop_black_afr_car.csv: Outputs/main_summaries.csv
+  - FINAL_03_model_summaries_univariate:
+      id: latest(parameter:covariate == "prop_other" && parameter:total_iterations == total_iterations && parameter:tree_depth == tree_depth && parameter:n_chains == n_chains && parameter:scale_by_susceptible_pool == scale_by_susceptible_pool && parameter:cases_type == cases_type && parameter:use_SGTF_data == use_SGTF_data && parameter:cases_type == cases_type && parameter:final_week == final_week && parameter:random_walk_prior_scale == random_walk_prior_scale && rw_penalty == rw_penalty )
+      use:
+        main_summaries_03_prop_other.csv: Outputs/main_summaries.csv
+  - FINAL_03_model_summaries_univariate:
+      id: latest(parameter:covariate == "IMD_Average_score" && parameter:total_iterations == total_iterations && parameter:tree_depth == tree_depth && parameter:n_chains == n_chains && parameter:scale_by_susceptible_pool == scale_by_susceptible_pool && parameter:cases_type == cases_type && parameter:use_SGTF_data == use_SGTF_data && parameter:cases_type == cases_type && parameter:final_week == final_week && parameter:random_walk_prior_scale == random_walk_prior_scale && rw_penalty == rw_penalty )
+      use:
+        main_summaries_04_IMD.csv: Outputs/main_summaries.csv
+  - FINAL_03_model_summaries_univariate:
+      id: latest(parameter:covariate == "prop_o65" && parameter:total_iterations == total_iterations && parameter:tree_depth == tree_depth && parameter:n_chains == n_chains && parameter:scale_by_susceptible_pool == scale_by_susceptible_pool && parameter:cases_type == cases_type && parameter:use_SGTF_data == use_SGTF_data && parameter:cases_type == cases_type && parameter:final_week == final_week && parameter:random_walk_prior_scale == random_walk_prior_scale && rw_penalty == rw_penalty )
+      use:
+        main_summaries_05_prop_o65.csv: Outputs/main_summaries.csv
+  - FINAL_03_model_summaries_univariate:
+      id: latest(parameter:covariate == "Pop_per_km2" && parameter:total_iterations == total_iterations && parameter:tree_depth == tree_depth && parameter:n_chains == n_chains && parameter:scale_by_susceptible_pool == scale_by_susceptible_pool && parameter:cases_type == cases_type && parameter:use_SGTF_data == use_SGTF_data && parameter:cases_type == cases_type && parameter:final_week == final_week && parameter:random_walk_prior_scale == random_walk_prior_scale && rw_penalty == rw_penalty )
+      use:
+        main_summaries_06_Pop_per_km2.csv: Outputs/main_summaries.csv
+  - FINAL_03_model_summaries_univariate:
+      id: latest(parameter:covariate == "Median_annual_income" && parameter:total_iterations == total_iterations && parameter:tree_depth == tree_depth && parameter:n_chains == n_chains && parameter:scale_by_susceptible_pool == scale_by_susceptible_pool && parameter:cases_type == cases_type && parameter:use_SGTF_data == use_SGTF_data && parameter:cases_type == cases_type && parameter:final_week == final_week && parameter:random_walk_prior_scale == random_walk_prior_scale && rw_penalty == rw_penalty )
+      use:
+        main_summaries_07_Median_annual_income.csv: Outputs/main_summaries.csv
+  - FINAL_03_model_summaries_univariate:
+      id: latest(parameter:covariate == "workplaces_percent_change_from_baseline" && parameter:total_iterations == total_iterations && parameter:tree_depth == tree_depth && parameter:n_chains == n_chains && parameter:scale_by_susceptible_pool == scale_by_susceptible_pool && parameter:cases_type == cases_type && parameter:use_SGTF_data == use_SGTF_data && parameter:cases_type == cases_type && parameter:final_week == final_week && parameter:random_walk_prior_scale == random_walk_prior_scale && rw_penalty == rw_penalty )
+      use:
+        main_summaries_08_workplaces.csv: Outputs/main_summaries.csv
+  - FINAL_03_model_summaries_univariate:
+      id: latest(parameter:covariate == "residential_percent_change_from_baseline" && parameter:total_iterations == total_iterations && parameter:tree_depth == tree_depth && parameter:n_chains == n_chains && parameter:scale_by_susceptible_pool == scale_by_susceptible_pool && parameter:cases_type == cases_type && parameter:use_SGTF_data == use_SGTF_data && parameter:cases_type == cases_type && parameter:final_week == final_week && parameter:random_walk_prior_scale == random_walk_prior_scale && rw_penalty == rw_penalty )
+      use:
+        main_summaries_09_residential.csv: Outputs/main_summaries.csv
+  - FINAL_03_model_summaries_univariate:
+      id: latest(parameter:covariate == "transit_stations_percent_change_from_baseline" && parameter:total_iterations == total_iterations && parameter:tree_depth == tree_depth && parameter:n_chains == n_chains && parameter:scale_by_susceptible_pool == scale_by_susceptible_pool && parameter:cases_type == cases_type && parameter:use_SGTF_data == use_SGTF_data && parameter:cases_type == cases_type && parameter:final_week == final_week && parameter:random_walk_prior_scale == random_walk_prior_scale && rw_penalty == rw_penalty )
+      use:
+        main_summaries_10_transit.csv: Outputs/main_summaries.csv
+  - FINAL_03_model_summaries_univariate:
+      id: latest(parameter:covariate == "s_Alpha_prop" && parameter:total_iterations == total_iterations && parameter:tree_depth == tree_depth && parameter:n_chains == n_chains && parameter:scale_by_susceptible_pool == scale_by_susceptible_pool && parameter:cases_type == cases_type && parameter:use_SGTF_data == use_SGTF_data && parameter:cases_type == cases_type && parameter:final_week == final_week && parameter:random_walk_prior_scale == random_walk_prior_scale && rw_penalty == rw_penalty )
+      use:
+        main_summaries_11_Alpha.csv: Outputs/main_summaries.csv
+  - FINAL_03_model_summaries_univariate:
+      id: latest(parameter:covariate == "s_Delta_prop" && parameter:total_iterations == total_iterations && parameter:tree_depth == tree_depth && parameter:n_chains == n_chains && parameter:scale_by_susceptible_pool == scale_by_susceptible_pool && parameter:cases_type == cases_type && parameter:use_SGTF_data == use_SGTF_data && parameter:cases_type == cases_type && parameter:final_week == final_week && parameter:random_walk_prior_scale == random_walk_prior_scale && rw_penalty == rw_penalty )
+      use:
+        main_summaries_12_Delta.csv: Outputs/main_summaries.csv
+  - FINAL_03_model_summaries_univariate:
+      id: latest(parameter:covariate == "s_Omicron_prop" && parameter:total_iterations == total_iterations && parameter:tree_depth == tree_depth && parameter:n_chains == n_chains && parameter:scale_by_susceptible_pool == scale_by_susceptible_pool && parameter:cases_type == cases_type && parameter:use_SGTF_data == use_SGTF_data && parameter:cases_type == cases_type && parameter:final_week == final_week && parameter:random_walk_prior_scale == random_walk_prior_scale && rw_penalty == rw_penalty )
+      use:
+        main_summaries_13_Omicron.csv: Outputs/main_summaries.csv
+  - FINAL_03_model_summaries_univariate:
+      id: latest(parameter:covariate == "unringfenced" && parameter:total_iterations == total_iterations && parameter:tree_depth == tree_depth && parameter:n_chains == n_chains && parameter:scale_by_susceptible_pool == scale_by_susceptible_pool && parameter:cases_type == cases_type && parameter:use_SGTF_data == use_SGTF_data && parameter:cases_type == cases_type && parameter:final_week == final_week && parameter:random_walk_prior_scale == random_walk_prior_scale && rw_penalty == rw_penalty )
+      use:
+        main_summaries_14_unringfenced.csv: Outputs/main_summaries.csv
+  - FINAL_03_model_summaries_univariate:
+      id: latest(parameter:covariate == "contain_outbreak_management" && parameter:total_iterations == total_iterations && parameter:tree_depth == tree_depth && parameter:n_chains == n_chains && parameter:scale_by_susceptible_pool == scale_by_susceptible_pool && parameter:cases_type == cases_type && parameter:use_SGTF_data == use_SGTF_data && parameter:cases_type == cases_type && parameter:final_week == final_week && parameter:random_walk_prior_scale == random_walk_prior_scale && rw_penalty == rw_penalty )
+      use:
+        main_summaries_15_COMF.csv: Outputs/main_summaries.csv
+  - FINAL_03_model_summaries_univariate:
+      id: latest(parameter:covariate == "ASC_infection_control_fund" && parameter:total_iterations == total_iterations && parameter:tree_depth == tree_depth && parameter:n_chains == n_chains && parameter:scale_by_susceptible_pool == scale_by_susceptible_pool && parameter:cases_type == cases_type && parameter:use_SGTF_data == use_SGTF_data && parameter:cases_type == cases_type && parameter:final_week == final_week && parameter:random_walk_prior_scale == random_walk_prior_scale && rw_penalty == rw_penalty )
+      use:
+        main_summaries_16_ASC.csv: Outputs/main_summaries.csv
+  - FINAL_03_model_summaries_A:
+      id: latest(parameter:total_iterations == total_iterations && parameter:tree_depth == tree_depth && parameter:n_chains == n_chains && parameter:scale_by_susceptible_pool == scale_by_susceptible_pool && parameter:cases_type == "Dashboard" && parameter:use_SGTF_data == use_SGTF_data && parameter:final_week == final_week && parameter:random_walk_prior_scale == random_walk_prior_scale && rw_penalty == rw_penalty )
+      use:
+        main_summaries_dashboard_cases.csv: Outputs/main_summaries.csv
+  - FINAL_03_model_summaries_A:
+      id: latest(parameter:total_iterations == total_iterations && parameter:tree_depth == tree_depth && parameter:n_chains == n_chains && parameter:scale_by_susceptible_pool == scale_by_susceptible_pool && parameter:cases_type == cases_type && parameter:use_SGTF_data == FALSE && parameter:final_week == final_week && parameter:random_walk_prior_scale == random_walk_prior_scale && rw_penalty == rw_penalty )
+      use:
+        main_summaries_dashboard_variant.csv: Outputs/main_summaries.csv
+  - FINAL_03_model_summaries_A:
+      id: latest(parameter:total_iterations == total_iterations && parameter:tree_depth == tree_depth && parameter:n_chains == n_chains && parameter:scale_by_susceptible_pool == scale_by_susceptible_pool && parameter:cases_type == "Dashboard" && parameter:use_SGTF_data == FALSE && parameter:final_week == final_week && parameter:random_walk_prior_scale == random_walk_prior_scale && rw_penalty == rw_penalty )
+      use:
+        main_summaries_dashboard_cases_AND_variant.csv: Outputs/main_summaries.csv
+        
