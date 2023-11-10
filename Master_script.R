@@ -3,6 +3,9 @@
 #This is an orderly store, and requires orderly to be installed to run:
 install.packages("orderly")
 
+#Ensure you have also followed the full install instructions for rstan:
+#https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started
+
 ###################################################################
 #We run task 01, which loads in multiple different data sources, and outputs a complete data frame and some additional files.
 Task01 <- orderly::orderly_run("01_Prepare_Data")
@@ -15,31 +18,45 @@ orderly::orderly_commit(Task01)
 #There are 11 additional sensitivity analyses, labelled B-L
 #Here we launch just the main analysis, but sensitivities can be launched in the same manner.
 
+#For reasons of data confidentiality the original line-list case data and variant data
+#is unable to be shared. These results below present results using the dashboard case data
+# and variant data. Section 4.4 of the Supplementary Material shows that this does not impact
+#the main results shown.
+
 #The model results as presented can be launched like so:
 Task02 <- orderly::orderly_run("02_model_fit_A",
-                               parameters = list(n_chains = 16))
+                               parameters = list(n_chains = 16,
+                                                 cases_type = "Dashboard",
+                                                 use_SGTF_data = FALSE))
 orderly::orderly_commit(Task02)
+
 #However, in practice this will not be able to run on a standard home computer.
 #This should instead be launched via a HPC.
-#In the meantime, an illustrative version is presented below, but will display poor convergence:
+#In the meantime, an illustrative version is presented below, but will display poorer convergence:
 
 Task02_illustrative <- orderly::orderly_run("02_model_fit_A",
-                                            parameters = list(tree_depth = 13,
+                                            parameters = list(tree_depth = 10,
                                                               total_iterations = 600,
-                                                              output_loo = FALSE))
+                                                              output_loo = FALSE,
+                                                              cases_type = "Dashboard",
+                                                              use_SGTF_data = FALSE))
 orderly::orderly_commit(Task02_illustrative)
 
 ###################################################################
 #Now run task 03, which will output some model summaries.
 
 Task03 <- orderly::orderly_run("03_model_summaries_A",
-                               parameters = list(n_chains = 16))
+                               parameters = list(n_chains = 16,
+                                                 cases_type = "Dashboard",
+                                                 use_SGTF_data = FALSE))
 orderly::orderly_commit(Task03)
 
 #Illustrative version:
 Task03_illustrative <- orderly::orderly_run("03_model_summaries_A",
-                                            parameters = list(tree_depth = 13,
-                                                              total_iterations = 600))
+                                            parameters = list(tree_depth = 10,
+                                                              total_iterations = 600,
+                                                              cases_type = "Dashboard",
+                                                              use_SGTF_data = FALSE))
 orderly::orderly_commit(Task03_illustrative)
 
 ##################################################################
@@ -49,26 +66,34 @@ orderly::orderly_commit(Task03_illustrative)
 #This should again be run via a HPC if available, though an illustrative version is again supplied as well.
 
 Task04 <- orderly::orderly_run("04_nb_CI_output",
-                               parameters = list(n_chains = 16))
+                               parameters = list(n_chains = 16,
+                                                 cases_type = "Dashboard",
+                                                 use_SGTF_data = FALSE))
 orderly::orderly_commit(Task04)
 
 #Illustrative version:
 Task04_illustrative <- orderly::orderly_run("04_nb_CI_output",
-                                            parameters = list(tree_depth = 13,
-                                                              total_iterations = 600))
+                                            parameters = list(tree_depth = 10,
+                                                              total_iterations = 600,
+                                                              cases_type = "Dashboard",
+                                                              use_SGTF_data = FALSE))
 orderly::orderly_commit(Task04_illustrative)
 
 ##################################################################
 #Task 05 then produces all four figures from the main manuscript
 
 Task05 <- orderly::orderly_run("05_manuscript_figures",
-                               parameters = list(n_chains = 16))
+                               parameters = list(n_chains = 16,
+                                                 cases_type = "Dashboard",
+                                                 use_SGTF_data = FALSE))
 orderly::orderly_commit(Task05)
 
 #Illustrative version:
 Task05_illustrative <- orderly::orderly_run("05_manuscript_figures",
-                                            parameters = list(tree_depth = 13,
-                                                              total_iterations = 600))
+                                            parameters = list(tree_depth = 10,
+                                                              total_iterations = 600,
+                                                              cases_type = "Dashboard",
+                                                              use_SGTF_data = FALSE))
 orderly::orderly_commit(Task05_illustrative)
 
 ##################################################################
@@ -91,21 +116,26 @@ covariates <- c("prop_asian", "prop_black_afr_car", "prop_other",
 for(i in covariates){
   orderly::orderly_run("02_model_fit_univariate",
                        parameters = list(n_chains = 16,
-                                         covariate = covariates[i]))
+                                         covariate = covariates[i],
+                                         cases_type = "Dashboard",
+                                         use_SGTF_data = FALSE))
 }
 
-orderly::orderly_run("02_model_fit_A",
-                     parameters = list(n_chains = 16,
-                                       cases_type = "Dashboard"))
-orderly::orderly_run("02_model_fit_A",
-                     parameters = list(n_chains = 16,
-                                       use_SGTF_data = FALSE))
-orderly::orderly_run("02_model_fit_A",
-                     parameters = list(n_chains = 16,
-                                       use_SGTF_data = FALSE,
-                                       cases_type = "Dashboard"))
+#orderly::orderly_run("02_model_fit_A",
+#                     parameters = list(n_chains = 16,
+#                                       cases_type = "Dashboard",
+#                                       ))
+#orderly::orderly_run("02_model_fit_A",
+#                     parameters = list(n_chains = 16,
+#                                       use_SGTF_data = FALSE))
+#orderly::orderly_run("02_model_fit_A",
+#                     parameters = list(n_chains = 16,
+#                                       use_SGTF_data = FALSE,
+#                                       cases_type = "Dashboard"))
 
 Task06 <- orderly::orderly_run("06_SI_figs",
-                               parameters = list(n_chains = 16))
+                               parameters = list(n_chains = 16,
+                                                 cases_type = "Dashboard",
+                                                 use_SGTF_data = FALSE))
 orderly::orderly_commit(Task06)
 

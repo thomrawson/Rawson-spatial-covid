@@ -303,7 +303,7 @@ ggplot() +
         axis.title = element_text(size = rel(1.3)),
         legend.text = element_text(size = rel(1.2)),
         legend.title = element_text(size = rel(1.3))) +
-  ggtitle("Weekly total Pillar 2 and PCR cases reported in England ") +
+  ggtitle("Weekly total Pillar 2 PCR-confirmed cases reported in England ") +
   geom_point(data = england_daily_total, aes(x = date, y = Real_Cases / 1000,
                                              color = "Data"),
              alpha = 0.7, shape = 18) +

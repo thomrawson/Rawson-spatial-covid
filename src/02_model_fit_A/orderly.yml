@@ -16,10 +16,10 @@ artefacts:
         - Outputs/model_data.RData
         - parameters_used.txt
         - Outputs/stan_model_code.RData
-        - Outputs/loo_mm_stanfit.RData
-        - lareto_k_table_mm.png
-        - loo_mm_PSIS.png
-        - loo_mm_estimates.png
+        #- Outputs/loo_mm_stanfit.RData
+        #- lareto_k_table_mm.png
+        #- loo_mm_PSIS.png
+        #- loo_mm_estimates.png
 
 # parameters:
 parameters:
