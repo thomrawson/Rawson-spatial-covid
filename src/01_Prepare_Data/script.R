@@ -40,7 +40,9 @@ Case_Rates_Data <- full_join(Case_Rates_Data, FirstEpisodes_Data, by=c("areaCode
 #############################################################################
 #Next, we're going to attach a different measure of cases:
 #Only the pillar 2, and PCR_only cases from the direct England line list
-Linelist_Data <- readRDS("Data/reduced_linelist.rds")
+
+#Linelist_Data <- readRDS("Data/reduced_linelist.rds")
+Linelist_Data <- readRDS("Data/reduced_linelist_EMPTY.rds")
 Linelist_Data <- filter(Linelist_Data, specimen_date < as.Date("2022-11-10"))
 
 new_LTLA_codes <- unique(Linelist_Data$ltla_code)
@@ -1214,7 +1216,9 @@ group_by(Portal_Variant_Data, date, nhs_region) %>%
 #We also have another source, aggregated from the VAM line list.
 #This has the benefit of covering the Alpha window. The above
 #data only covers Feb-21 onwards.
-VAM_Variant_Data <- read.csv("Data/VAM_variant_data.csv")
+
+#VAM_Variant_Data <- read.csv("Data/VAM_variant_data.csv")
+VAM_Variant_Data <- read.csv("Data/VAM_variant_data_EMPTY.csv")
 
 VAM_Variant_Data %>%
   mutate(across('nhs_region', str_replace, 'North East and Yorkshire', 'north_east_and_yorkshire')) %>%
@@ -1367,7 +1371,8 @@ for(i in 1:nrow(Case_Rates_Data)){
 # and s_neg as particular variants. We build these columns below:
 
 #Load in the SGTF data
-SGTF_Data <- read.csv("Data/s_by_ltla_pillar2_pcr.csv")
+#SGTF_Data <- read.csv("Data/s_by_ltla_pillar2_pcr.csv")
+SGTF_Data <- read.csv("Data/s_by_ltla_pillar2_pcr_EMPTY.csv")
 
 #First, collapse this to be weekly sums as opposed to daily.
 SGTF_Data$specimen_date <- as.Date(SGTF_Data$specimen_date)

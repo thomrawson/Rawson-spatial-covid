@@ -60,12 +60,15 @@ resources:
   - Data\Wales_cum_third_vacc.csv #Third vaccinations in Wales
   - Data\Annual_median_income.csv 
   - Data\Portal_variant_data.csv #Variant data from dashboard
-  - Data\VAM_variant_data.csv #Supplementary variant data for Alpha emmergence
+  #- Data\VAM_variant_data.csv #Supplementary variant data for Alpha emmergence
+  - Data\VAM_variant_data_EMPTY.csv #Supplementary variant data for Alpha emmergence
   - Data\NHS_funding_allocations.csv #NHS funding data (pre-COVID)
   - Data\LTLA_to_CCG_codes.csv #LTLA to clinical care group codes
   - Data\LTLA_Covid_Extra_Funding.csv #Data on COVID-19 funding pots
   - Data\LTLA_to_UTLA_codes.csv #LTLA to UTLA conversion codes
-  - Data\s_by_ltla_pillar2_pcr.csv #SGTF data
+  #- Data\s_by_ltla_pillar2_pcr.csv #SGTF data
+  - Data\s_by_ltla_pillar2_pcr_EMPTY.csv #SGTF data
   - Data\ltla_first_episodes_2023_06_22.csv #first episodes taken from the UK dashboard
-  - Data\reduced_linelist.rds #Aggregated data taken from line list
+  #- Data\reduced_linelist.rds #Aggregated data taken from line list
+  - Data\reduced_linelist_EMPTY.rds #Aggregated data taken from line list
   
