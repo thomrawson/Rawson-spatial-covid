@@ -1282,8 +1282,11 @@ colnames(VAM_Variant_Data) <- c("date", "nhs_region", "variant", "cases")
 
 VAM_Variant_Data$date <- as.Date(VAM_Variant_Data$date)
 #Calculate the percentages for the VAM data:
+
 group_by(VAM_Variant_Data, date, nhs_region) %>% 
-  mutate(newWeeklyPercentage = 100*(cases/sum(cases))) -> VAM_Variant_Data
+  mutate(newWeeklyPercentage = ifelse(is.nan(100*(cases/sum(cases))),
+                                      0, 100*(cases/sum(cases)))
+         ) -> VAM_Variant_Data
 
 #plot the two datasets together to see how they vary 
 
